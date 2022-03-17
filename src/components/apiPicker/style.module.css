@@ -1,0 +1,20 @@
+.full {
+  width: 100%;
+}
+.urlDesc {
+  padding: 5px 20px;
+}
+.longInput {
+  width: 80% !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  color: white !important;
+  /* border: none !important; */
+}
+
+.longInput:hover,
+.longInput:active,
+.longInput:focus {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}

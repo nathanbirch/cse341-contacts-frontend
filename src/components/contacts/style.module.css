@@ -1,0 +1,89 @@
+h2 {
+  font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.contactsUl {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 !important;
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
+.contactsUl > li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+}
+
+.contactsUl > li span {
+  text-decoration: none;
+  color: #000;
+  display: block;
+
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease, height;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease, height;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease, height;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease, height;
+  transition: font-size 0.3s ease, background-color 0.3s ease, height;
+}
+
+.contactsUl > li span:hover {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.contactInfoUl {
+  list-style-type: none;
+  margin: 0;
+  font-size: 20px;
+  padding: 0;
+}
+.plusIcon {
+  display: inline;
+  font-size: 20px;
+  float: right;
+  border-radius: 50px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  transition: 0.5s;
+}
+.plusIcon:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+.modifyIcons {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.iconContainer {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin: 10px;
+  transition: 0.5s;
+}
+
+.iconContainer:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}
+.contactsUl::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.contactsUl::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #ccc;
+}
+.contactsUl::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0);
+}
