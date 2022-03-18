@@ -130,6 +130,7 @@ export default function ContactList(props) {
               </div>
             )}
           </h2>
+          <br />
           <ul className={styles.contactsUl}>
             {contacts.map((contact, i) => {
               return (
