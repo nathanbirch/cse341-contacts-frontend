@@ -3,29 +3,42 @@ import styles from './style.module.css';
 import { FaRegTrashAlt, FaRegEdit } from 'react-icons/fa';
 import { Row, Col } from 'react-bootstrap';
 import ContactForm from './contactForm';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function ContactView(props) {
   const [showForm, setShowForm] = useState(false);
+
   const [newContact, setNewContact] = useState(null);
   const startEditing = () => {
     setNewContact(JSON.parse(JSON.stringify(props.contact)));
     setShowForm(true);
   };
-
   const cancelEdit = () => {
     setShowForm(false);
   };
-  const updateContact = async () => {
+  const updateContact = async (nContact) => {
     const updateRoute = props.api + '/contacts/' + props.contact._id;
+    const c = {
+      firstName: nContact.firstName,
+      lastName: nContact.lastName,
+      email: nContact.email,
+      favoriteColor: nContact.favoriteColor,
+      birthday: nContact.birthday,
+    };
     try {
-      const response = await fetch(updateRoute, {
+      await fetch(updateRoute, {
         method: 'PUT',
-        body: JSON.stringify(newContact),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(c),
       });
-      console.log(response.status);
+      toast.success('Contact Edited');
+      props.updateHandler(c, props.contactIndex);
       setShowForm(false);
     } catch (err) {
       console.log(err);
+      toast.error('Something went wrong');
     }
   };
   const deleteContact = async () => {
@@ -36,11 +49,17 @@ export default function ContactView(props) {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
-      .then((res) => console.log(res));
+      .then(() => {
+        toast.success('Delete Successful');
+        props.deleteHandler();
+      })
+      .catch((err) => {
+        toast.error('Something went wrong');
+      });
   };
   return (
     <div className='text-center'>
+      <ToastContainer />
       <h1>
         {props.contact.firstName} {props.contact.lastName}{' '}
       </h1>
@@ -51,9 +70,9 @@ export default function ContactView(props) {
         <li>Birthday: {props.contact.birthday}</li>
       </ul>
       <Row className={`${styles.modifyIcons} text-center`}>
-        {/* <Col className={styles.iconContainer} onClick={startEditing}>
+        <Col className={styles.iconContainer} onClick={startEditing}>
           <FaRegEdit />
-        </Col> */}
+        </Col>
         <Col className={styles.iconContainer} onClick={deleteContact}>
           <FaRegTrashAlt />
         </Col>

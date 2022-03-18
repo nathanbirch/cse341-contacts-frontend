@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styles from './style.module.css';
 import {
   Form,
-  Button,
   Navbar,
   Row,
   Col,
@@ -25,8 +24,7 @@ export default function ApiPicker(props) {
           <Navbar.Collapse id='navbarScroll'>
             <Col>
               <p className={styles.urlDesc}>
-                Insert your API URL for this frontend application to work. For
-                example: (https://cse341-contacts.herokuapp.com)
+                Insert your API URL for this frontend application to work.
               </p>
             </Col>
             <Col>
@@ -52,28 +50,5 @@ export default function ApiPicker(props) {
         </Row>
       </Container>
     </Navbar>
-    // <div className='d-flex d-flex justify-content-center'>
-    //   <p>
-    //     For this frontend application to work, please enter your API url below.{' '}
-    //   </p>
-    //   <Form onSubmit={onSubmit}>
-    //     <Form.Group className='mb-3' controlId='formBasicEmail'>
-    //       <Form.Label>API URL</Form.Label>
-    //       <Form.Control
-    //         value={api}
-    //         onChange={(e) => setApi(e.target.value)}
-    //         type='url'
-    //         placeholder='Your API URL'
-    //       />
-    //       <Form.Text className='text-muted'>
-    //         Please enter your API URL, for example:
-    //         https://cse341-contacts.herokuapp.com
-    //       </Form.Text>
-    //     </Form.Group>
-    //     <Button variant='primary' type='submit'>
-    //       Submit
-    //     </Button>
-    //   </Form>
-    // </div>
   );
 }

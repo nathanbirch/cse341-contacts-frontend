@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col, Form } from 'react-bootstrap';
 import styles from './style.module.css';
 
 export default function ContactForm(props) {
-  const [newContact] = useState(props.contact);
   const save = () => {
-    if (props.edit) {
-      props.saveHandler(newContact);
-    } else {
-      props.saveHandler(newContact);
-    }
+    const c = {
+      firstName: firstName.current.value,
+      lastName: lastName.current.value,
+      email: email.current.value,
+      favoriteColor: favoriteColor.current.value,
+      birthday: birthday.current.value,
+    };
+    props.saveHandler(c);
   };
+  const firstName = React.createRef();
+  const lastName = React.createRef();
+  const email = React.createRef();
+  const favoriteColor = React.createRef();
+  const birthday = React.createRef();
   return (
     <div>
       {!props.edit && <h2>Create New Contact</h2>}
@@ -20,40 +27,45 @@ export default function ContactForm(props) {
             <Form.Label>First Name</Form.Label>
             <Form.Control
               type='text'
-              value={newContact.firstName}
-              onChange={(e) => (newContact.firstName = e.target.value)}
+              defaultValue={props.contact.firstName}
+              className={styles.regularInput}
+              ref={firstName}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formLastName'>
             <Form.Label>Last Name</Form.Label>
             <Form.Control
               type='text'
-              value={newContact.lastName}
-              onChange={(e) => (newContact.lastName = e.target.value)}
+              defaultValue={props.contact.lastName}
+              className={styles.regularInput}
+              ref={lastName}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formEmail'>
             <Form.Label>Email</Form.Label>
             <Form.Control
               type='email'
-              value={newContact.email}
-              onChange={(e) => (newContact.email = e.target.value)}
+              defaultValue={props.contact.email}
+              className={styles.regularInput}
+              ref={email}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formColor'>
             <Form.Label>Favorite Color</Form.Label>
             <Form.Control
               type='text'
-              value={newContact.favoriteColor}
-              onChange={(e) => (newContact.favoriteColor = e.target.value)}
+              defaultValue={props.contact.favoriteColor}
+              className={styles.regularInput}
+              ref={favoriteColor}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formColor'>
             <Form.Label>Birthday</Form.Label>
             <Form.Control
               type='text'
-              value={newContact.birthday}
-              onChange={(e) => (newContact.birthday = e.target.value)}
+              defaultValue={props.contact.birthday}
+              className={styles.regularInput}
+              ref={birthday}
             />
           </Form.Group>
           <Row className={`${styles.modifyIcons} text-center`}>

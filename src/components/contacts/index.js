@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './style.module.css';
 import ContactView from './contactView';
 import { Col } from 'react-bootstrap';
 import { css } from '@emotion/react';
-import ClipLoader from 'react-spinners/ClipLoader';
-import { FaPlus } from 'react-icons/fa';
+import PuffLoader from 'react-spinners/PuffLoader';
 import ContactForm from './contactForm';
-// import './style.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ContactList(props) {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [chosenContact, setChosenContact] = useState(null);
+  const [chosenContactIndex, setChosenContactIndex] = useState(null);
   const [error, setError] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const displayForm = () => {
@@ -30,14 +31,18 @@ export default function ContactList(props) {
       body: JSON.stringify(newContact),
     })
       .then((response) => response.json())
-      .then((data) => {
-        // props.addContact(data);
-        console.log(data);
+      .then(() => {
+        toast.success('Contact Created');
         setShowForm(false);
+        updateContactList(newContact, null);
+      })
+      .catch((err) => {
+        toast.error('Something went wrong');
+        console.log(err);
       });
   };
 
-  const getContacts = async () => {
+  const getContacts = useCallback(async () => {
     const getAllRoute = props.api + '/contacts';
     try {
       const response = await fetch(getAllRoute);
@@ -49,9 +54,28 @@ export default function ContactList(props) {
       setLoading(false);
       setError(true);
     }
+  }, [props.api]);
+  const updateContactList = (contact, index) => {
+    const newContacts = [...contacts];
+    if (contact) {
+      if (index) {
+        newContacts[index] = contact;
+      } else {
+        newContacts.push(contact);
+      }
+    } else {
+      newContacts.splice(index, 1);
+    }
+    setChosenContact(null);
+    setContacts(newContacts);
   };
   const updateChosenContact = (contactIndex) => {
     setChosenContact(contacts[contactIndex]);
+    setChosenContactIndex(contactIndex);
+  };
+  const removeChosenContact = () => {
+    setChosenContact(null);
+    updateContactList(null, chosenContactIndex);
   };
   const override = css`
     display: block;
@@ -60,10 +84,11 @@ export default function ContactList(props) {
   `;
   useEffect(() => {
     getContacts();
-  }, [props.api, contacts]);
+  }, [props.api, getContacts]);
   return (
     <>
-      {loading && <ClipLoader color={'blue'} css={override} size={150} />}
+      <ToastContainer />
+      {loading && <PuffLoader color={'white'} css={override} size={80} />}
       {error && (
         <div>
           <p>
@@ -101,7 +126,7 @@ export default function ContactList(props) {
             Your Contacts
             {!showForm && (
               <div className={styles.plusIcon} onClick={displayForm}>
-                Create New <FaPlus />
+                Create New
               </div>
             )}
           </h2>
@@ -125,13 +150,25 @@ export default function ContactList(props) {
         <Col sm={12} md={6}>
           {showForm ? (
             <ContactForm
-              contact={{}}
+              contact={{
+                firstName: '',
+                lastName: '',
+                email: '',
+                favoriteColor: '',
+                birthday: '',
+              }}
               saveHandler={createContact}
               cancelHandler={cancelCreate}
             />
           ) : (
             chosenContact && (
-              <ContactView contact={chosenContact} api={props.api} />
+              <ContactView
+                contact={chosenContact}
+                contactIndex={chosenContactIndex}
+                api={props.api}
+                deleteHandler={removeChosenContact}
+                updateHandler={updateContactList}
+              />
             )
           )}
         </Col>
