@@ -131,7 +131,7 @@ export default function ContactList(props) {
             )}
           </h2>
           <ul className={styles.contactsUl}>
-            {contacts.reverse().map((contact, i) => {
+            {contacts.map((contact, i) => {
               return (
                 <li key={i}>
                   <span
