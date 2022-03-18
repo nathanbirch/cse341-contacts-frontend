@@ -58,7 +58,7 @@ export default function ContactList(props) {
   const updateContactList = (contact, index) => {
     const newContacts = [...contacts];
     if (contact) {
-      if (index) {
+      if (index || index === 0) {
         newContacts[index] = contact;
       } else {
         newContacts.push(contact);
