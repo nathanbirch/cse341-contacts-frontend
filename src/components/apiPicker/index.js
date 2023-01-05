@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 
 export default function ApiPicker(props) {
-  const [api, setApi] = useState('https://cse341-contacts.herokuapp.com');
+  const [api, setApi] = useState('https://contacts-backend-gft0.onrender.com');
   const onSubmit = (event) => {
     event.preventDefault();
     props.setHandler(api);

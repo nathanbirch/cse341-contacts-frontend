@@ -97,8 +97,8 @@ export default function ContactList(props) {
           </p>
           <ul>
             <li>
-              Your url is not in the correct format. It needs to look exactly
-              like this: https://cse341-contacts.herokuapp.com
+              Your url is not in the correct format. It needs to look
+              like this: https://contacts-backend-gft0.onrender.com
             </li>
             <li>There is a trailing "/" in your url or another typo</li>
             <li>
